@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { AuthPageRoutingModule } from './auth-routing.module';
-
+import { SharedModule } from './../../shared/shared.module';
 import { AuthPage } from './auth.page';
 
 @NgModule({
@@ -13,8 +13,9 @@ import { AuthPage } from './auth.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    AuthPageRoutingModule
+    AuthPageRoutingModule,
+    SharedModule,
   ],
-  declarations: [AuthPage]
+  declarations: [AuthPage],
 })
 export class AuthPageModule {}
