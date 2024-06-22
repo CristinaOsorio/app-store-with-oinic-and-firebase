@@ -11,6 +11,7 @@ import { User } from './../../../models/user.model';
 })
 export class SignUpPage implements OnInit {
   form = new FormGroup({
+    uid: new FormControl(''),
     name: new FormControl('', [Validators.required, Validators.minLength(4)]),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
@@ -30,7 +31,37 @@ export class SignUpPage implements OnInit {
         .signUp(this.form.value as User)
         .then(async (res) => {
           await this.firebaseService.updateUser(this.form.value.name);
-          console.log(res);
+          const uid = res.user.uid;
+          this.form.controls.uid.setValue(uid);
+          this.setUserInfo(uid);
+        })
+        .catch((errors) => {
+          this.utilsService.presentToast({
+            message: errors.message,
+            duration: 2500,
+            color: 'danger',
+            position: 'middle',
+            icon: 'alert-circle-outline',
+          });
+        })
+        .finally(() => loading.dismiss());
+    }
+  }
+
+  async setUserInfo(uid: string) {
+    if (this.form.valid) {
+      const loading = await this.utilsService.loading();
+      await loading.present();
+
+      let path = `users/${uid}`;
+      delete this.form.value.password;
+
+      this.firebaseService
+        .setDocument(path, this.form.value)
+        .then(async (res) => {
+          this.utilsService.setInLocalStorage('user', this.form.value);
+          this.utilsService.routerLink('/main/home');
+          this.form.reset();
         })
         .catch((errors) => {
           this.utilsService.presentToast({
