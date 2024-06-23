@@ -15,6 +15,7 @@ export class HomePage implements OnInit {
   utilsService = inject(UtilsService);
 
   products: Product[] = [];
+  loading: boolean = false;
 
   ngOnInit() {}
 
@@ -28,10 +29,12 @@ export class HomePage implements OnInit {
 
   getProducts() {
     let path = `users/${this.user().uid}/products`;
+    this.loading = true;
 
     let sub = this.firebaseService.getCollectionData(path).subscribe({
       next: (res: any) => {
         this.products = res;
+        this.loading = false;
         sub.unsubscribe();
       },
     });
