@@ -27,12 +27,18 @@ h4 {
   font-weight: bold;
 }
 
-.avatar-icon {
-  font-size: 100px;
-}
-
 ion-menu {
   --width: 254px;
   --min-width: 254px;
   outline: non e;
+}
+
+ion-avatar {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto;
+}
+
+.empty-icon {
+  font-size: 100px;
 }

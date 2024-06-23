@@ -2,7 +2,12 @@
 
 <ion-content class="ion-padding-top ion-text-center">
   <ion-avatar>
-    <img [src]="user()?.image" />
+    <img *ngIf="user()?.image" [src]="user()?.image" />
+    <ion-icon
+      *ngIf="!user()?.image"
+      class="empty-icon"
+      name="person-circle-outline"
+    ></ion-icon>
   </ion-avatar>
 
   <ion-button
