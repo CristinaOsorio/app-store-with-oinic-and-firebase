@@ -13,7 +13,7 @@ export const authGuard: CanActivateFn = (route, state) => {
         return resolve(true);
       }
 
-      utilsService.routerLink('/auth');
+      firebaseService.singOut();
       resolve(false);
     });
   });
