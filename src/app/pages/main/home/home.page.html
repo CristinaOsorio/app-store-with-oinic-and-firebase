@@ -1,7 +1,9 @@
 <app-header title="Inicio"></app-header>
 
 <ion-content [fullscreen]="true">
-  <ion-button (click)="signOut()">
-    <ion-icon name="log-out-outline"></ion-icon>
-  </ion-button>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="addUpdateProduct()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

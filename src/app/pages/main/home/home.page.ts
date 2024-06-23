@@ -1,6 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { FirebaseService } from 'src/app/services/firebase.service';
-import { UtilsService } from 'src/app/services/utils.service';
+import { FirebaseService } from './../../../services/firebase.service';
+import { UtilsService } from './../../../services/utils.service';
+import { AddUpdateProductComponent } from './../../../shared/components/add-update-product/add-update-product.component';
 
 @Component({
   selector: 'app-home',
@@ -14,5 +15,12 @@ export class HomePage implements OnInit {
 
   signOut() {
     this.firebaseService.singOut();
+  }
+
+  addUpdateProduct() {
+    this.utilsService.presentModal({
+      component: AddUpdateProductComponent,
+      cssClass: 'add-update-modal',
+    });
   }
 }

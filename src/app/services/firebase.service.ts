@@ -10,8 +10,22 @@ import {
 } from 'firebase/auth';
 import { User } from '../models/user.model';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { getFirestore, setDoc, doc, getDoc } from '@angular/fire/firestore';
+import {
+  getFirestore,
+  setDoc,
+  doc,
+  getDoc,
+  addDoc,
+  collection,
+} from '@angular/fire/firestore';
 import { UtilsService } from './utils.service';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadString,
+} from 'firebase/storage';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +33,9 @@ import { UtilsService } from './utils.service';
 export class FirebaseService {
   auth = inject(AngularFireAuth);
   firestore = inject(AngularFirestore);
+  storage = inject(AngularFireStorage);
   utilsService = inject(UtilsService);
+
   signIn(user: User) {
     return signInWithEmailAndPassword(getAuth(), user.email, user.password);
   }
@@ -34,14 +50,6 @@ export class FirebaseService {
     });
   }
 
-  setDocument(path: string, data: any) {
-    return setDoc(doc(getFirestore(), path), data);
-  }
-
-  async getDocument(path: string) {
-    return (await getDoc(doc(getFirestore(), path))).data();
-  }
-
   sendRecoveryEmail(email: string) {
     return sendPasswordResetEmail(getAuth(), email);
   }
@@ -53,5 +61,27 @@ export class FirebaseService {
     getAuth().signOut();
     localStorage.removeItem('user');
     this.utilsService.routerLink('/auth');
+  }
+
+  getCollectionData() {}
+
+  setDocument(path: string, data: any) {
+    return setDoc(doc(getFirestore(), path), data);
+  }
+
+  async getDocument(path: string) {
+    return (await getDoc(doc(getFirestore(), path))).data();
+  }
+
+  addDocument(path: string, data: any) {
+    return addDoc(collection(getFirestore(), path), data);
+  }
+
+  async uploadImage(path: string, data_url: string) {
+    return uploadString(ref(getStorage(), path), data_url, 'data_url').then(
+      () => {
+        return getDownloadURL(ref(getStorage(), path));
+      }
+    );
   }
 }

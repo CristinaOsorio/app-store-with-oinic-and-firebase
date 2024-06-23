@@ -1,0 +1,93 @@
+<app-header [isModal]="true" title="Agregar Producto"></app-header>
+<ion-content>
+  <div class="d-flex-center">
+    <form
+      [formGroup]="form"
+      class="ion-padding ion-text-center"
+      (ngSubmit)="submit()"
+      (keypress.enter)="submit()"
+    >
+      <ion-avatar *ngIf="form.value.image">
+        <img [src]="form.value.image" />
+      </ion-avatar>
+
+      <ion-icon
+        class="image-icon"
+        *ngIf="!form.value.image"
+        name="image-outline"
+      ></ion-icon>
+
+      <br />
+
+      <ion-button (click)="takeImage()" size="small" shape="round" mode="ios">
+        Toma/Seleccionar
+      </ion-button>
+
+      <app-custom-input
+        [control]="form.controls.name"
+        type="text"
+        label="Nombre"
+      ></app-custom-input>
+
+      <div
+        class="validators"
+        *ngIf="form.controls.name.errors && form.controls.name.touched"
+      >
+        <div *ngIf="form.controls.name.errors?.['required']">
+          El nombre es requerido
+        </div>
+        <div *ngIf="form.controls.name.errors?.['minLength']">
+          El nombre debe tener al menos 4 caracteres
+        </div>
+      </div>
+
+      <app-custom-input
+        [control]="form.controls.price"
+        type="number"
+        label="Precio"
+      ></app-custom-input>
+
+      <div
+        class="validators"
+        *ngIf="form.controls.price.errors && form.controls.price.touched"
+      >
+        <div *ngIf="form.controls.price.errors?.['required']">
+          El precio es requerido
+        </div>
+        <div *ngIf="form.controls.price.errors?.['min']">
+          El precio mínimo debe ser 0
+        </div>
+      </div>
+
+      <app-custom-input
+        [control]="form.controls.soldUnits"
+        type="number"
+        label="Unidades Vendidas"
+      ></app-custom-input>
+
+      <div
+        class="validators"
+        *ngIf="
+          form.controls.soldUnits.errors && form.controls.soldUnits.touched
+        "
+      >
+        <div *ngIf="form.controls.soldUnits.errors?.['required']">
+          La cantidad es requerida
+        </div>
+        <div *ngIf="form.controls.soldUnits.errors?.['min']">
+          La cantidad mínima debe ser 0
+        </div>
+      </div>
+
+      <ion-button
+        class="ion-margin"
+        mode="ios"
+        type="submit"
+        [disabled]="form.invalid"
+      >
+        Agregar Producto
+        <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
+      </ion-button>
+    </form>
+  </div>
+</ion-content>
