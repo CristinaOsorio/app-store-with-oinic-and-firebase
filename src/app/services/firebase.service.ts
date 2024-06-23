@@ -17,6 +17,8 @@ import {
   getDoc,
   addDoc,
   collection,
+  collectionData,
+  query,
 } from '@angular/fire/firestore';
 import { UtilsService } from './utils.service';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
@@ -63,7 +65,10 @@ export class FirebaseService {
     this.utilsService.routerLink('/auth');
   }
 
-  getCollectionData() {}
+  getCollectionData(path: string, collectionQuery?: any) {
+    const ref = collection(getFirestore(), path);
+    return collectionData(query(ref, collectionQuery), { idField: 'id' });
+  }
 
   setDocument(path: string, data: any) {
     return setDoc(doc(getFirestore(), path), data);
