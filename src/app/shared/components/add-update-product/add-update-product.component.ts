@@ -43,6 +43,13 @@ export class AddUpdateProductComponent implements OnInit {
     this.form.controls.image.setValue(dataUrl);
   }
 
+  setNumberInputs() {
+    let { soldUnits, price } = this.form.controls;
+
+    if (soldUnits.value) soldUnits.setValue(parseFloat(soldUnits.value));
+    if (price.value) price.setValue(parseFloat(price.value));
+  }
+
   submit() {
     if (this.form.valid) {
       if (this.product) this.updateProduct();

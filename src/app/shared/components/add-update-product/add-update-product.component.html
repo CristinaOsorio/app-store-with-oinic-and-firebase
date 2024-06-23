@@ -48,6 +48,7 @@
         [control]="form.controls.price"
         type="number"
         label="Precio"
+        (ionInput)="setNumberInputs()"
       ></app-custom-input>
 
       <div
@@ -66,6 +67,7 @@
         [control]="form.controls.soldUnits"
         type="number"
         label="Unidades Vendidas"
+        (ionInput)="setNumberInputs()"
       ></app-custom-input>
 
       <div
