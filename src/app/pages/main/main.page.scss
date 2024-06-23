@@ -1,0 +1,29 @@
+ion-content {
+  --background: var(--ion-color-primary);
+  --color: var(--ion-color-primary-content);
+  --padding-top: 20px;
+}
+
+ion-item {
+  font-size: 14px;
+  color: var(--ion-color-light);
+  --background: var(--ion-color-primary);
+
+  ion-icon {
+    color: var(--ion-color-light);
+  }
+
+  &.active {
+    color: var(--ion-color-warning);
+
+    ion-icon {
+      color: var(--ion-color-warning);
+    }
+  }
+}
+
+ion-menu {
+  --width: 254px;
+  --min-width: 254px;
+  outline: non e;
+}
