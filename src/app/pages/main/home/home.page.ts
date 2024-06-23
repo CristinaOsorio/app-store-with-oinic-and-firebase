@@ -4,6 +4,7 @@ import { UtilsService } from './../../../services/utils.service';
 import { AddUpdateProductComponent } from './../../../shared/components/add-update-product/add-update-product.component';
 import { User } from './../../../models/user.model';
 import { Product } from './../../../models/product.model';
+import { orderBy } from 'firebase/firestore';
 
 @Component({
   selector: 'app-home',
@@ -31,7 +32,9 @@ export class HomePage implements OnInit {
     let path = `users/${this.user().uid}/products`;
     this.loading = true;
 
-    let sub = this.firebaseService.getCollectionData(path).subscribe({
+    const query = orderBy('soldUnits', 'asc');
+
+    let sub = this.firebaseService.getCollectionData(path, query).subscribe({
       next: (res: any) => {
         this.products = res;
         this.loading = false;
