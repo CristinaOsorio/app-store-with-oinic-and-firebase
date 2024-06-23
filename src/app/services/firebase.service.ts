@@ -19,6 +19,7 @@ import {
   collection,
   collectionData,
   query,
+  updateDoc,
 } from '@angular/fire/firestore';
 import { UtilsService } from './utils.service';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
@@ -74,6 +75,10 @@ export class FirebaseService {
     return setDoc(doc(getFirestore(), path), data);
   }
 
+  updateDocument(path: string, data: any) {
+    return updateDoc(doc(getFirestore(), path), data);
+  }
+
   async getDocument(path: string) {
     return (await getDoc(doc(getFirestore(), path))).data();
   }
@@ -88,5 +93,9 @@ export class FirebaseService {
         return getDownloadURL(ref(getStorage(), path));
       }
     );
+  }
+
+  async getFilePath(url: string) {
+    return ref(getStorage(), url).fullPath;
   }
 }

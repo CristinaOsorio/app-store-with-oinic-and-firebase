@@ -37,10 +37,16 @@ export class HomePage implements OnInit {
     });
   }
 
-  addUpdateProduct() {
-    this.utilsService.presentModal({
+  async addUpdateProduct(product?: Product) {
+    const success = await this.utilsService.presentModal({
       component: AddUpdateProductComponent,
       cssClass: 'add-update-modal',
+      componentProps: {
+        product,
+      },
     });
+    console.log(success);
+
+    if (success) this.getProducts();
   }
 }
