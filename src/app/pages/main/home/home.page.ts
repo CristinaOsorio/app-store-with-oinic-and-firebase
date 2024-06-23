@@ -35,6 +35,13 @@ export class HomePage implements OnInit {
     }, 1000);
   }
 
+  getProfits() {
+    return this.products.reduce(
+      (index, product) => index + product.price * product.soldUnits,
+      0
+    );
+  }
+
   getProducts() {
     let path = `users/${this.user().uid}/products`;
     this.loading = true;
