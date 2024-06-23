@@ -1,6 +1,9 @@
 <ion-menu contentId="menu-content" menuId="menu-content" side="start">
   <app-header title="Menú"></app-header>
-  <ion-content>
+  <ion-content class="ion-text-center">
+    <ion-icon class="avatar-icon" name="person-circle-outline"></ion-icon>
+    <h4>{{user().name}}</h4>
+
     <ion-menu-toggle autoHide="false" *ngFor="let page of pages">
       <ion-item
         [ngClass]="{'active': currentPath === page.url}"
@@ -13,6 +16,15 @@
       </ion-item>
     </ion-menu-toggle>
   </ion-content>
+
+  <ion-footer class="ion-no-border safe-p-botton">
+    <ion-menu-toggle autoHide="false">
+      <ion-item (click)="signOut()" lines="none">
+        <ion-icon slot="start" name="log-out-outline"></ion-icon>
+        <ion-label>Cerrar sesión</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+  </ion-footer>
 </ion-menu>
 
 <ion-router-outlet id="menu-content" main></ion-router-outlet>
