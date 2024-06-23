@@ -1,6 +1,10 @@
 <app-header title="Inicio"></app-header>
 
 <ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <ion-list *ngIf="!loading">
     <ion-item-sliding class="product-item" *ngFor="let product of products">
       <ion-item>

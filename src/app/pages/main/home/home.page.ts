@@ -4,7 +4,7 @@ import { UtilsService } from './../../../services/utils.service';
 import { AddUpdateProductComponent } from './../../../shared/components/add-update-product/add-update-product.component';
 import { User } from './../../../models/user.model';
 import { Product } from './../../../models/product.model';
-import { orderBy } from 'firebase/firestore';
+import { orderBy, where } from 'firebase/firestore';
 
 @Component({
   selector: 'app-home',
@@ -26,6 +26,13 @@ export class HomePage implements OnInit {
 
   ionViewWillEnter() {
     this.getProducts();
+  }
+
+  doRefresh(event) {
+    setTimeout(() => {
+      this.getProducts();
+      event.target.complete();
+    }, 1000);
   }
 
   getProducts() {
