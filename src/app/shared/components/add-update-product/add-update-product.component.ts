@@ -3,7 +3,7 @@ import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { FirebaseService } from './../../../services/firebase.service';
 import { UtilsService } from './../../../services/utils.service';
-import { Product } from 'src/app/models/product.model';
+import { Product } from '../../../models/product.model';
 
 @Component({
   selector: 'app-add-update-product',
@@ -98,8 +98,8 @@ export class AddUpdateProductComponent implements OnInit {
 
     let dataUrl = this.form.value.image;
     let imagePath = `${this.user.uid}/${Date.now()}`;
-
     let imageUrl = await this.firebaseService.uploadImage(imagePath, dataUrl);
+
     this.form.controls.image.setValue(imageUrl);
 
     delete this.form.value.id;

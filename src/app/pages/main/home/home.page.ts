@@ -45,8 +45,61 @@ export class HomePage implements OnInit {
         product,
       },
     });
-    console.log(success);
 
     if (success) this.getProducts();
+  }
+
+  async confirmDeleteProduct(product: Product) {
+    this.utilsService.presentAlert({
+      header: 'Eliminar Producto',
+      message: '¿Quieres eliminar este producto?',
+      mode: 'ios',
+      buttons: [
+        {
+          text: 'Cancelar',
+        },
+        {
+          text: 'Sí, eliminar',
+          handler: () => {
+            this.deleteProduct(product);
+          },
+        },
+      ],
+    });
+  }
+
+  async deleteProduct(product: Product) {
+    let path = `users/${this.user().uid}/products/${product.id}`;
+
+    const loading = await this.utilsService.loading();
+    await loading.present();
+
+    let imagePath = await this.firebaseService.getFilePath(product.image);
+
+    await this.firebaseService.deleteFile(imagePath);
+
+    this.firebaseService
+      .deleteDocument(path)
+      .then(async (res) => {
+        this.products = this.products.filter((p) => p.id !== product.id);
+
+        this.utilsService.presentToast({
+          message: 'Producto eliminado exitosamente',
+          duration: 1500,
+          color: 'success',
+          position: 'middle',
+          icon: 'checkmark-circle-outline',
+        });
+      })
+      .catch((errors) => {
+        this.utilsService.presentToast({
+          message: errors.message,
+          duration: 2500,
+          color: 'danger',
+          position: 'middle',
+          icon: 'alert-circle-outline',
+        });
+      })
+      .finally(() => loading.dismiss());
   }
 }
